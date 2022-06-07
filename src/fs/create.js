@@ -1,24 +1,19 @@
-import { throws } from 'assert';
 import * as fs from 'fs/promises';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+
+const __fileName = fileURLToPath(import.meta.url);
+const __dirName = dirname(__fileName);
+
 export const create = async () => {
   const content = 'I am fresh and young';
-  const filename = path.join(path.resolve(), '/src/fs/files/fresh.txt');
+  const filename = path.join(__dirName, '/files/fresh.txt');
 
   try {
-    await fs.access(filename);
-    // throw Error('FS operation failed')
-    console.error('FS operation failed');
-  } catch {
-    try {
-        await fs.writeFile(filename, content);
-        console.log('FS operation finished');
-      } catch (error) {
-        console.error(error)
-      }
+    await fs.writeFile(filename, content, { flag: 'wx' });
+  } catch (err) {
+    throw new Error('FS operation failed');
   }
-
-
 };
 
 create();
