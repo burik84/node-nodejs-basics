@@ -13,7 +13,8 @@
     "fs:read": "node ./src/fs/read.js",
     "cli:env": "npx cross-env RSS_first=Alex RSS_second=Family node src/cli/env.js",
     "cli:args": "node src/cli/args.js --propName Alex --prop2Name Family ",
-    "modules": "node src/modules/cjsToEsm.mjs"
+    "modules": "node src/modules/cjsToEsm.mjs",
+    "hash": "node ./src/hash/calcHash.js"
   },
   "repository": {
     "type": "git",
