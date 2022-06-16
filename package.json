@@ -20,7 +20,8 @@
     "streams:transform": "node ./src/streams/transform.js",
     "zip:compress": "node ./src/zip/compress.js",
     "zip:decompress": "node ./src/zip/decompress.js",
-    "workers": "node ./src/wt/main.js"
+    "workers": "node ./src/wt/main.js",
+    "cp": "node ./src/cp/cp.js"
   },
   "repository": {
     "type": "git",
