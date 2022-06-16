@@ -14,7 +14,10 @@
     "cli:env": "npx cross-env RSS_first=Alex RSS_second=Family node src/cli/env.js",
     "cli:args": "node src/cli/args.js --propName Alex --prop2Name Family ",
     "modules": "node src/modules/cjsToEsm.mjs",
-    "hash": "node ./src/hash/calcHash.js"
+    "hash": "node ./src/hash/calcHash.js",
+    "streams:write": "node ./src/streams/write.js",
+    "streams:read": "node ./src/streams/read.js",
+    "streams:transform": "node ./src/streams/transform.js"
   },
   "repository": {
     "type": "git",
