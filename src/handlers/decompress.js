@@ -1,9 +1,12 @@
 import { createReadStream, createWriteStream } from 'fs';
 import { parse, resolve } from 'path';
 import { pipeline } from 'stream/promises';
-import { createBrotliCompress } from 'zlib';
+import { createBrotliDecompress } from 'zlib';
 import { displayCurrentDirectory } from '../helpers/display';
-import { isDirectory as isCurrentDirectory, isFile as isCurrentFile } from '../helpers/isFiles';
+import {
+  isDirectory as isCurrentDirectory,
+  isFile as isCurrentFile,
+} from '../helpers/isFiles';
 
 export const handleDecompress = async ([rawPath, rawPathToDestination]) => {
   try {
@@ -13,14 +16,17 @@ export const handleDecompress = async ([rawPath, rawPathToDestination]) => {
     if (!isFile) throw new Error("It's not a file");
 
     const pathToFile = resolve(rawPath);
-    const { base } = parse(pathToFile);
-    const fileName = `${base}.br`;
-    const pathToDestination = resolve(rawPathToDestination, fileName);
+    const { name, ext } = parse(pathToFile);
+    if (!ext.includes('.br')) {
+      throw new Error('invalid path extension');
+    }
+
+    const pathToDestination = resolve(rawPathToDestination, name);
 
     const readeblStream = createReadStream(pathToFile);
     const writebleStream = createWriteStream(pathToDestination);
-    const brotliCompress = createBrotliCompress();
-    await pipeline(readeblStream, brotliCompress, writebleStream);
+    const brotliDecompress = createBrotliDecompress();
+    await pipeline(readeblStream, brotliDecompress, writebleStream);
     displayCurrentDirectory();
   } catch (error) {
     console.error('Operation failed');
